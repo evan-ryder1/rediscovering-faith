@@ -23,6 +23,12 @@ Portfolio evidence:
 - Screenshots of the first usable interface
 - Sprint 1 recap in ClickUp and GitHub
 
+Working files:
+
+- [Sprint 1 backlog](sprint-1-backlog.md)
+- [ClickUp import guide](clickup/import-guide.md)
+- [ClickUp CSV import](clickup/sprint-1-clickup-import.csv)
+
 ## Sprint 2: Community & Engagement
 
 Goal: turn passive listening into conversation and saved engagement.

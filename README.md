@@ -59,6 +59,12 @@ The project is organized into four one-week sprints:
 
 See [docs/sprint-plan.md](docs/sprint-plan.md) for the working breakdown.
 
+Sprint 1 planning files:
+
+- [Sprint 1 backlog](docs/sprint-1-backlog.md)
+- [ClickUp import guide](docs/clickup/import-guide.md)
+- [ClickUp CSV import](docs/clickup/sprint-1-clickup-import.csv)
+
 ## Getting Started
 
 Install dependencies:
