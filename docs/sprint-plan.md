@@ -28,6 +28,8 @@ Working files:
 - [Sprint 1 backlog](sprint-1-backlog.md)
 - [ClickUp import guide](clickup/import-guide.md)
 - [ClickUp CSV import](clickup/sprint-1-clickup-import.csv)
+- [Supabase client setup](supabase-client-setup.md)
+- [Initial database schema](database-schema.md)
 
 ## Sprint 2: Community & Engagement
 

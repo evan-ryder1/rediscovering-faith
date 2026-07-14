@@ -64,6 +64,8 @@ Sprint 1 planning files:
 - [Sprint 1 backlog](docs/sprint-1-backlog.md)
 - [ClickUp import guide](docs/clickup/import-guide.md)
 - [ClickUp CSV import](docs/clickup/sprint-1-clickup-import.csv)
+- [Supabase client setup](docs/supabase-client-setup.md)
+- [Initial database schema](docs/database-schema.md)
 
 ## Getting Started
 
