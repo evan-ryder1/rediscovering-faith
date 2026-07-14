@@ -30,6 +30,7 @@ Working files:
 - [ClickUp CSV import](clickup/sprint-1-clickup-import.csv)
 - [Supabase client setup](supabase-client-setup.md)
 - [Initial database schema](database-schema.md)
+- [Sample content](sample-content.md)
 
 ## Sprint 2: Community & Engagement
 
