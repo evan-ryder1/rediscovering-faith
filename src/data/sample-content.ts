@@ -255,5 +255,36 @@ export function getEpisodesForPodcast(podcastId: string) {
 export function getTranscriptForEpisode(episodeId: string) {
   return sampleTranscriptSegments
     .filter((segment) => segment.episodeId === episodeId)
-    .sort((firstSegment, secondSegment) => firstSegment.position - secondSegment.position);
+    .sort(
+      (firstSegment, secondSegment) =>
+        firstSegment.position - secondSegment.position,
+    );
+}
+
+export function getEpisodeCountForPodcast(podcastId: string) {
+  return sampleEpisodes.filter((episode) => episode.podcastId === podcastId)
+    .length;
+}
+
+export function getTranscriptCountForPodcast(podcastId: string) {
+  const episodeIds = getEpisodesForPodcast(podcastId).map((episode) => episode.id);
+
+  return sampleTranscriptSegments.filter((segment) =>
+    episodeIds.includes(segment.episodeId),
+  ).length;
+}
+
+export function formatEpisodeDuration(durationSeconds: number) {
+  const minutes = Math.floor(durationSeconds / 60);
+  const seconds = durationSeconds % 60;
+
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
+export function formatPublishedDate(publishedAt: string) {
+  return new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(publishedAt));
 }

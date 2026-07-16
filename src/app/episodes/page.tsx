@@ -1,4 +1,11 @@
-import { sampleEpisodes, samplePodcasts } from "@/data/sample-content";
+import Link from "next/link";
+
+import {
+  formatEpisodeDuration,
+  formatPublishedDate,
+  sampleEpisodes,
+  samplePodcasts,
+} from "@/data/sample-content";
 
 export default function EpisodesPage() {
   return (
@@ -20,10 +27,16 @@ export default function EpisodesPage() {
                 key={episode.id}
               >
                 <div>
-                  <p className="text-sm font-bold text-[#c34417]">
+                  <Link
+                    className="text-sm font-bold text-[#c34417] transition hover:text-[#9f3614]"
+                    href={`/podcasts/${podcast?.slug}`}
+                  >
                     {podcast?.title}
-                  </p>
+                  </Link>
                   <h2 className="mt-2 text-2xl font-black">{episode.title}</h2>
+                  <p className="mt-1 text-sm font-bold text-[#8a7a70]">
+                    {formatPublishedDate(episode.publishedAt)}
+                  </p>
                   <p className="mt-3 leading-7 text-[#5f5148]">
                     {episode.description}
                   </p>
@@ -31,7 +44,7 @@ export default function EpisodesPage() {
                 <div className="min-w-32 border-l-4 border-[#2f7d63] bg-[#f8f4ed] p-4">
                   <p className="text-sm font-bold text-[#6b5c52]">Duration</p>
                   <p className="mt-1 text-2xl font-black">
-                    {Math.round(episode.durationSeconds / 60)} min
+                    {formatEpisodeDuration(episode.durationSeconds)}
                   </p>
                 </div>
               </article>
