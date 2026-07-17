@@ -1,44 +1,44 @@
 export default function SignInPage() {
   return (
-    <main className="flex flex-1 bg-[#f8f4ed] px-6 py-10 text-[#211a16] sm:px-10 lg:px-12">
+    <main className="brand-page flex flex-1 px-6 py-10 text-[#241914] sm:px-10 lg:px-12">
       <section className="mx-auto grid w-full max-w-5xl gap-8 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.15em] text-[#c34417]">
+          <p className="brand-kicker">
             Account Access
           </p>
-          <h1 className="mt-2 text-4xl font-black">Sign in</h1>
-          <p className="mt-4 leading-7 text-[#5f5148]">
+          <h1 className="brand-display mt-2 text-5xl sm:text-6xl">Sign in</h1>
+          <p className="mt-4 leading-7 text-[#6e5b50]">
             Return to your saved episodes, transcript notes, and community
             conversations.
           </p>
         </div>
 
-        <form className="border border-[#dfd2c3] bg-white p-6 shadow-sm">
-          <label className="block text-sm font-bold text-[#4f453e]" htmlFor="email">
+        <form className="brand-card p-6">
+          <label className="block text-sm font-black text-[#4f453e]" htmlFor="email">
             Email
           </label>
           <input
-            className="mt-2 w-full border border-[#d6c6b8] px-3 py-3 text-base outline-none focus:border-[#c34417]"
+            className="mt-2 w-full border border-[#f1d8c7] px-3 py-3 text-base outline-none focus:border-[#e85f1f]"
             id="email"
             name="email"
             type="email"
           />
 
           <label
-            className="mt-5 block text-sm font-bold text-[#4f453e]"
+            className="mt-5 block text-sm font-black text-[#4f453e]"
             htmlFor="password"
           >
             Password
           </label>
           <input
-            className="mt-2 w-full border border-[#d6c6b8] px-3 py-3 text-base outline-none focus:border-[#c34417]"
+            className="mt-2 w-full border border-[#f1d8c7] px-3 py-3 text-base outline-none focus:border-[#e85f1f]"
             id="password"
             name="password"
             type="password"
           />
 
           <button
-            className="mt-6 w-full rounded-md bg-[#21201e] px-5 py-3 text-sm font-bold text-white"
+            className="brand-button mt-6 w-full px-5 py-3 text-sm"
             type="button"
           >
             Sign In
