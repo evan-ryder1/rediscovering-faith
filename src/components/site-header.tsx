@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { AuthNav } from "@/components/auth-nav";
+
 const navItems = [
   { href: "/podcasts", label: "Podcasts" },
   { href: "/episodes", label: "Episodes" },
-  { href: "/auth/sign-in", label: "Sign In" },
 ];
 
 export function SiteHeader() {
@@ -41,6 +42,7 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <AuthNav />
         </nav>
       </div>
     </header>

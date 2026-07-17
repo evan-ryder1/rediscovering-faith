@@ -128,9 +128,11 @@ export default async function PodcastDetailPage({
                       <p className="text-sm font-bold text-[#6e5b50]">
                         {formatPublishedDate(episode.publishedAt)}
                       </p>
-                      <h3 className="mt-2 text-2xl font-black uppercase leading-tight">
-                        {episode.title}
-                      </h3>
+                      <Link href={`/episodes/${episode.slug}`}>
+                        <h3 className="mt-2 text-2xl font-black uppercase leading-tight transition hover:text-[#e85f1f]">
+                          {episode.title}
+                        </h3>
+                      </Link>
                     </div>
                     <span className="w-fit rounded-md bg-white px-3 py-2 text-sm font-black text-[#4f453e]">
                       {formatEpisodeDuration(episode.durationSeconds)}
@@ -139,9 +141,12 @@ export default async function PodcastDetailPage({
                   <p className="mt-3 leading-7 text-[#6e5b50]">
                     {episode.description}
                   </p>
-                  <p className="mt-4 text-sm font-black uppercase tracking-[0.1em] text-[#e85f1f]">
-                    Episode detail and transcript view coming next in Sprint 1
-                  </p>
+                  <Link
+                    className="mt-4 inline-flex text-sm font-black uppercase tracking-[0.1em] text-[#e85f1f] transition hover:text-[#c94a12]"
+                    href={`/episodes/${episode.slug}`}
+                  >
+                    Open episode and transcript
+                  </Link>
                 </article>
               ))}
             </div>

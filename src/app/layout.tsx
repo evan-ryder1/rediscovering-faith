@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AuthProvider } from "@/components/auth-provider";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
@@ -17,9 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
-        <SiteHeader />
-        <div className="flex flex-1 flex-col">{children}</div>
-        <SiteFooter />
+        <AuthProvider>
+          <SiteHeader />
+          <div className="flex flex-1 flex-col">{children}</div>
+          <SiteFooter />
+        </AuthProvider>
       </body>
     </html>
   );

@@ -244,6 +244,16 @@ export function getEpisodeBySlug(slug: string) {
   return sampleEpisodes.find((episode) => episode.slug === slug);
 }
 
+export function getPodcastForEpisode(episodeId: string) {
+  const episode = sampleEpisodes.find((item) => item.id === episodeId);
+
+  if (!episode) {
+    return undefined;
+  }
+
+  return samplePodcasts.find((podcast) => podcast.id === episode.podcastId);
+}
+
 export function getEpisodesForPodcast(podcastId: string) {
   return sampleEpisodes
     .filter((episode) => episode.podcastId === podcastId)
@@ -279,6 +289,13 @@ export function formatEpisodeDuration(durationSeconds: number) {
   const seconds = durationSeconds % 60;
 
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
+export function formatTranscriptTimestamp(seconds: number) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+
+  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 }
 
 export function formatPublishedDate(publishedAt: string) {
