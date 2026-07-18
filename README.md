@@ -67,6 +67,7 @@ Sprint 1 planning files:
 - [Supabase client setup](docs/supabase-client-setup.md)
 - [Initial database schema](docs/database-schema.md)
 - [Sample content](docs/sample-content.md)
+- [Sprint 1 test plan](docs/testing/sprint-1-test-plan.md)
 
 ## Getting Started
 
