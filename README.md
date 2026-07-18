@@ -68,6 +68,7 @@ Sprint 1 planning files:
 - [Initial database schema](docs/database-schema.md)
 - [Sample content](docs/sample-content.md)
 - [Sprint 1 test plan](docs/testing/sprint-1-test-plan.md)
+- [Sprint 1 QA pass](docs/testing/sprint-1-qa-pass.md)
 
 ## Getting Started
 

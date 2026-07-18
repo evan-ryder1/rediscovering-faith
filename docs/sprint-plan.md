@@ -31,6 +31,7 @@ Working files:
 - [Supabase client setup](supabase-client-setup.md)
 - [Initial database schema](database-schema.md)
 - [Sample content](sample-content.md)
+- [Sprint 1 QA pass](testing/sprint-1-qa-pass.md)
 
 ## Sprint 2: Community & Engagement
 
