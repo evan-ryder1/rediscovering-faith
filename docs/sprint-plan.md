@@ -52,6 +52,12 @@ Portfolio evidence:
 - Tests for comment and saved-item behavior
 - Demo screenshots or short screen recording
 
+Working files:
+
+- [Sprint 2 outcome](sprint-2-outcome.md)
+- [Sprint 2 backlog](sprint-2-backlog.md)
+- [ClickUp CSV import](clickup/sprint-2-clickup-import.csv)
+
 ## Sprint 3: Pastoral & Church Tools
 
 Goal: support trusted leadership, moderation, and care workflows.

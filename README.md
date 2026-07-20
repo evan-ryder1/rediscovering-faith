@@ -70,6 +70,8 @@ Sprint 1 planning files:
 - [Sample content](docs/sample-content.md)
 - [Sprint 1 test plan](docs/testing/sprint-1-test-plan.md)
 - [Sprint 1 QA pass](docs/testing/sprint-1-qa-pass.md)
+- [Sprint 2 outcome](docs/sprint-2-outcome.md)
+- [Sprint 2 backlog](docs/sprint-2-backlog.md)
 
 ## Getting Started
 
