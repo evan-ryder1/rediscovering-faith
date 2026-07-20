@@ -26,6 +26,7 @@ Portfolio evidence:
 Working files:
 
 - [Sprint 1 backlog](sprint-1-backlog.md)
+- [Sprint 1 recap](sprint-1-recap.md)
 - [ClickUp import guide](clickup/import-guide.md)
 - [ClickUp CSV import](clickup/sprint-1-clickup-import.csv)
 - [Supabase client setup](supabase-client-setup.md)
