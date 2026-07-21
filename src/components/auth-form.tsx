@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 
 import { useAuth } from "@/components/auth-provider";
 
@@ -15,6 +15,15 @@ export function AuthForm({ mode }: AuthFormProps) {
   const [name, setName] = useState("Evan Ryder");
   const [email, setEmail] = useState("evan@example.com");
   const [password, setPassword] = useState("");
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    const frameId = window.requestAnimationFrame(() => {
+      setIsHydrated(true);
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, []);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -43,6 +52,7 @@ export function AuthForm({ mode }: AuthFormProps) {
             name="name"
             onChange={(event) => setName(event.target.value)}
             required
+            disabled={!isHydrated}
             type="text"
             value={name}
           />
@@ -61,6 +71,7 @@ export function AuthForm({ mode }: AuthFormProps) {
         name="email"
         onChange={(event) => setEmail(event.target.value)}
         required
+        disabled={!isHydrated}
         type="email"
         value={email}
       />
@@ -77,11 +88,16 @@ export function AuthForm({ mode }: AuthFormProps) {
         name="password"
         onChange={(event) => setPassword(event.target.value)}
         required
+        disabled={!isHydrated}
         type="password"
         value={password}
       />
 
-      <button className="brand-button mt-6 w-full px-5 py-3 text-sm" type="submit">
+      <button
+        className="brand-button mt-6 w-full px-5 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:translate-y-0"
+        disabled={!isHydrated}
+        type="submit"
+      >
         {mode === "sign-up" ? "Create Account" : "Sign In"}
       </button>
 

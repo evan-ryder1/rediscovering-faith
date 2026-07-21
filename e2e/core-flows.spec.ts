@@ -49,4 +49,34 @@ test.describe("Rediscovering Faith core flows", () => {
     await expect(page.getByText("Signed Out")).toBeVisible();
     await expect(page.getByRole("link", { name: "Sign In" }).first()).toBeVisible();
   });
+
+  test("signed-in listener can add a timestamped transcript comment", async ({
+    page,
+  }) => {
+    await page.goto("/auth/sign-up");
+
+    await page.getByLabel("Name").fill("Jordan Lee");
+    await page.getByLabel("Email").fill("jordan-comments@example.com");
+    await page.getByLabel("Password").fill("faith-community");
+    await page.getByRole("button", { name: "Create Account" }).click();
+
+    await page.goto("/episodes/finding-belonging-after-spiritual-burnout");
+
+    const firstSegment = page
+      .locator("li")
+      .filter({
+        hasText: "Welcome back to Rediscovering Faith Conversations.",
+      })
+      .first();
+
+    await firstSegment
+      .getByLabel("Comment on 0:00")
+      .fill("This opening makes the community need clear.");
+    await firstSegment.getByRole("button", { name: "Add Comment" }).click();
+
+    await expect(
+      firstSegment.getByText("This opening makes the community need clear."),
+    ).toBeVisible();
+    await expect(firstSegment.getByText("1 comment")).toBeVisible();
+  });
 });

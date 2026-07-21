@@ -53,6 +53,8 @@ Acceptance criteria:
 - Comments remain attached to the correct transcript segment.
 - State layer is isolated so it can later be replaced by Supabase.
 
+Status: Completed July 21, 2026 with local community state in `CommunityProvider`.
+
 ### RF-020: Build timestamped comment UI
 
 Priority: High  
@@ -66,6 +68,8 @@ Acceptance criteria:
 - A signed-in listener can submit a comment.
 - A signed-out visitor sees a clear sign-in prompt.
 - New comments render under the selected transcript segment.
+
+Status: Completed July 21, 2026 with timestamped comment UI on episode detail pages.
 
 ### RF-021: Add replies to comments
 

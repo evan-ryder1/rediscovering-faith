@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { EpisodeTranscriptComments } from "@/components/episode-transcript-comments";
 import {
   formatEpisodeDuration,
   formatPublishedDate,
-  formatTranscriptTimestamp,
   getEpisodeBySlug,
   getPodcastForEpisode,
   getTranscriptForEpisode,
@@ -126,42 +126,7 @@ export default async function EpisodeDetailPage({
             </p>
           </div>
 
-          {transcript.length > 0 ? (
-            <ol className="mt-5 grid gap-4">
-              {transcript.map((segment) => (
-                <li
-                  className="grid gap-4 border-l-4 border-[#ff8a45] bg-[#fff4ea] p-5 sm:grid-cols-[6rem_1fr]"
-                  key={segment.id}
-                >
-                  <div>
-                    <p className="text-sm font-black uppercase tracking-[0.12em] text-[#e85f1f]">
-                      {formatTranscriptTimestamp(segment.startSeconds)}
-                    </p>
-                    <p className="mt-2 text-xs font-bold text-[#8a7a70]">
-                      Segment {segment.position}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm font-black uppercase tracking-[0.1em] text-[#4f453e]">
-                      {segment.speakerName}
-                    </p>
-                    <p className="mt-2 text-lg leading-8 text-[#4f453e]">
-                      {segment.content}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          ) : (
-            <div className="mt-5 border border-dashed border-[#f1d8c7] bg-[#fff4ea] p-6">
-              <h3 className="text-xl font-black uppercase">
-                Transcript coming soon
-              </h3>
-              <p className="mt-2 text-[#6e5b50]">
-                Timestamped transcript segments will appear here.
-              </p>
-            </div>
-          )}
+          <EpisodeTranscriptComments episodeId={episode.id} segments={transcript} />
         </section>
       </section>
     </main>

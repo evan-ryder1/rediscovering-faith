@@ -1,0 +1,224 @@
+"use client";
+
+import Link from "next/link";
+import { useMemo, useState, type FormEvent } from "react";
+
+import { useAuth } from "@/components/auth-provider";
+import { useCommunity } from "@/components/community-provider";
+import {
+  formatCommentTime,
+  type EpisodeComment,
+} from "@/data/community-content";
+import {
+  formatTranscriptTimestamp,
+  type TranscriptSegment,
+} from "@/data/sample-content";
+
+type EpisodeTranscriptCommentsProps = {
+  episodeId: string;
+  segments: TranscriptSegment[];
+};
+
+function getCommentLabel(count: number) {
+  return `${count} ${count === 1 ? "comment" : "comments"}`;
+}
+
+function CommentList({ comments }: { comments: EpisodeComment[] }) {
+  if (comments.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="mt-4 grid gap-3">
+      {comments.map((comment) => (
+        <article
+          className="border border-[#f1d8c7] bg-white p-4"
+          key={comment.id}
+        >
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm font-black uppercase text-[#241914]">
+              {comment.authorName}
+            </p>
+            <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#8a7a70]">
+              {formatCommentTime(comment.createdAt)}
+            </p>
+          </div>
+          <p className="mt-2 leading-7 text-[#4f453e]">{comment.content}</p>
+          <div className="mt-3 flex items-center gap-3 text-xs font-black uppercase tracking-[0.1em] text-[#8a7a70]">
+            <span>{comment.reactionCount} reactions</span>
+            <span>{comment.replies.length} replies</span>
+          </div>
+          {comment.replies.length > 0 ? (
+            <div className="mt-3 grid gap-2 border-l-4 border-[#ff8a45] pl-4">
+              {comment.replies.map((reply) => (
+                <div key={reply.id}>
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="text-sm font-black text-[#241914]">
+                      {reply.authorName}
+                    </p>
+                    <p className="text-xs font-bold uppercase tracking-[0.1em] text-[#8a7a70]">
+                      {formatCommentTime(reply.createdAt)}
+                    </p>
+                  </div>
+                  <p className="mt-1 text-sm leading-6 text-[#4f453e]">
+                    {reply.content}
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </article>
+      ))}
+    </div>
+  );
+}
+
+export function EpisodeTranscriptComments({
+  episodeId,
+  segments,
+}: EpisodeTranscriptCommentsProps) {
+  const { user } = useAuth();
+  const { addComment, getCommentCountForSegment, getCommentsForSegment } =
+    useCommunity();
+  const [drafts, setDrafts] = useState<Record<string, string>>({});
+
+  const totalCommentCount = useMemo(
+    () =>
+      segments.reduce(
+        (count, segment) => count + getCommentCountForSegment(segment.id),
+        0,
+      ),
+    [getCommentCountForSegment, segments],
+  );
+
+  function updateDraft(segmentId: string, content: string) {
+    setDrafts((currentDrafts) => ({
+      ...currentDrafts,
+      [segmentId]: content,
+    }));
+  }
+
+  function handleSubmit(
+    event: FormEvent<HTMLFormElement>,
+    segment: TranscriptSegment,
+  ) {
+    event.preventDefault();
+
+    if (!user) {
+      return;
+    }
+
+    const content = drafts[segment.id]?.trim();
+
+    if (!content) {
+      return;
+    }
+
+    addComment({
+      episodeId,
+      transcriptSegmentId: segment.id,
+      authorName: user.name,
+      content,
+    });
+
+    updateDraft(segment.id, "");
+  }
+
+  if (segments.length === 0) {
+    return (
+      <div className="mt-5 border border-dashed border-[#f1d8c7] bg-[#fff4ea] p-6">
+        <h3 className="text-xl font-black uppercase">Transcript coming soon</h3>
+        <p className="mt-2 text-[#6e5b50]">
+          Timestamped transcript segments will appear here.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-5">
+      <div className="flex flex-col gap-3 border-b border-[#f1d8c7] pb-4 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm font-bold text-[#6e5b50]">
+          {getCommentLabel(totalCommentCount)} across {segments.length}{" "}
+          transcript segments
+        </p>
+        {user ? (
+          <p className="w-fit bg-[#fff4ea] px-3 py-2 text-xs font-black uppercase tracking-[0.1em] text-[#e85f1f]">
+            Commenting as {user.name}
+          </p>
+        ) : (
+          <Link className="brand-button-secondary w-fit px-4 py-2 text-sm" href="/auth/sign-in">
+            Sign in to comment
+          </Link>
+        )}
+      </div>
+
+      <ol className="mt-5 grid gap-4">
+        {segments.map((segment) => {
+          const segmentComments = getCommentsForSegment(segment.id);
+          const draft = drafts[segment.id] ?? "";
+
+          return (
+            <li
+              className="grid gap-4 border-l-4 border-[#ff8a45] bg-[#fff4ea] p-5 sm:grid-cols-[6rem_1fr]"
+              key={segment.id}
+            >
+              <div>
+                <p className="text-sm font-black uppercase tracking-[0.12em] text-[#e85f1f]">
+                  {formatTranscriptTimestamp(segment.startSeconds)}
+                </p>
+                <p className="mt-2 text-xs font-bold text-[#8a7a70]">
+                  Segment {segment.position}
+                </p>
+                <p className="mt-3 text-xs font-black uppercase tracking-[0.1em] text-[#4f453e]">
+                  {getCommentLabel(segmentComments.length)}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm font-black uppercase tracking-[0.1em] text-[#4f453e]">
+                  {segment.speakerName}
+                </p>
+                <p className="mt-2 text-lg leading-8 text-[#4f453e]">
+                  {segment.content}
+                </p>
+
+                {user ? (
+                  <form
+                    className="mt-4 grid gap-3 border-t border-[#f1d8c7] pt-4"
+                    onSubmit={(event) => handleSubmit(event, segment)}
+                  >
+                    <label
+                      className="text-sm font-black text-[#4f453e]"
+                      htmlFor={`comment-${segment.id}`}
+                    >
+                      Add a timestamped comment
+                    </label>
+                    <textarea
+                      aria-label={`Comment on ${formatTranscriptTimestamp(segment.startSeconds)}`}
+                      className="min-h-24 w-full border border-[#f1d8c7] bg-white px-3 py-3 text-base leading-7 text-[#241914] outline-none focus:border-[#e85f1f]"
+                      id={`comment-${segment.id}`}
+                      onChange={(event) =>
+                        updateDraft(segment.id, event.target.value)
+                      }
+                      placeholder="Share what this moment brings up..."
+                      value={draft}
+                    />
+                    <button
+                      className="brand-button w-fit px-5 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:translate-y-0"
+                      disabled={draft.trim().length === 0}
+                      type="submit"
+                    >
+                      Add Comment
+                    </button>
+                  </form>
+                ) : null}
+
+                <CommentList comments={segmentComments} />
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}

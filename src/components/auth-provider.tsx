@@ -2,6 +2,7 @@
 
 import {
   createContext,
+  useEffect,
   useContext,
   useMemo,
   useState,
@@ -23,18 +24,24 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 const storageKey = "rediscovering-faith-user";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AuthUser | null>(() => {
+  const [user, setUser] = useState<AuthUser | null>(null);
+
+  useEffect(() => {
     if (typeof window === "undefined") {
-      return null;
+      return undefined;
     }
 
-    try {
-      const storedUser = window.localStorage.getItem(storageKey);
-      return storedUser ? (JSON.parse(storedUser) as AuthUser) : null;
-    } catch {
-      return null;
-    }
-  });
+    const frameId = window.requestAnimationFrame(() => {
+      try {
+        const storedUser = window.localStorage.getItem(storageKey);
+        setUser(storedUser ? (JSON.parse(storedUser) as AuthUser) : null);
+      } catch {
+        setUser(null);
+      }
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, []);
 
   const value = useMemo<AuthContextValue>(
     () => ({

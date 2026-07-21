@@ -2,6 +2,8 @@ import { render, screen } from "@testing-library/react";
 import { notFound } from "next/navigation";
 
 import EpisodeDetailPage from "@/app/episodes/[slug]/page";
+import { AuthProvider } from "@/components/auth-provider";
+import { CommunityProvider } from "@/components/community-provider";
 
 jest.mock("next/navigation", () => ({
   notFound: jest.fn(() => {
@@ -17,7 +19,11 @@ describe("EpisodeDetailPage", () => {
       }),
     });
 
-    render(page);
+    render(
+      <AuthProvider>
+        <CommunityProvider>{page}</CommunityProvider>
+      </AuthProvider>,
+    );
 
     expect(
       screen.getByRole("heading", {
@@ -30,6 +36,10 @@ describe("EpisodeDetailPage", () => {
     expect(screen.getByText("Timestamped Transcript")).toBeInTheDocument();
     expect(screen.getByText("0:00")).toBeInTheDocument();
     expect(screen.getByText("2:23")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Sign in to comment" })).toHaveAttribute(
+      "href",
+      "/auth/sign-in",
+    );
     expect(screen.getByText(/a podcast can start the conversation/i)).toBeInTheDocument();
   });
 

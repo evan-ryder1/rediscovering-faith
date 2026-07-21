@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { AccountPanel } from "@/components/account-panel";
@@ -34,6 +34,8 @@ describe("local auth flow", () => {
       </>,
     );
 
+    await waitFor(() => expect(screen.getByLabelText("Name")).toBeEnabled());
+
     await user.clear(screen.getByLabelText("Name"));
     await user.type(screen.getByLabelText("Name"), "Jordan Lee");
     await user.clear(screen.getByLabelText("Email"));
@@ -57,6 +59,8 @@ describe("local auth flow", () => {
     );
 
     expect(screen.getByText("Signed Out")).toBeInTheDocument();
+
+    await waitFor(() => expect(screen.getByLabelText("Email")).toBeEnabled());
 
     await user.clear(screen.getByLabelText("Email"));
     await user.type(screen.getByLabelText("Email"), "evan@example.com");
