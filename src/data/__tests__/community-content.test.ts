@@ -23,4 +23,11 @@ describe("community content helpers", () => {
     expect(commentWithReply).toBeDefined();
     expect(commentWithReply?.replies[0].commentId).toBe(commentWithReply?.id);
   });
+
+  it("tracks reaction totals and the users who reacted", () => {
+    const comment = sampleEpisodeComments[0];
+
+    expect(comment.reactionCount).toBeGreaterThan(0);
+    expect(comment.reactionUserEmails.length).toBeGreaterThan(0);
+  });
 });

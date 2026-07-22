@@ -13,6 +13,7 @@ export type EpisodeComment = {
   authorName: string;
   content: string;
   reactionCount: number;
+  reactionUserEmails: string[];
   createdAt: string;
   replies: CommentReply[];
 };
@@ -20,6 +21,12 @@ export type EpisodeComment = {
 export type NewEpisodeComment = {
   episodeId: string;
   transcriptSegmentId: string;
+  authorName: string;
+  content: string;
+};
+
+export type NewCommentReply = {
+  commentId: string;
   authorName: string;
   content: string;
 };
@@ -33,6 +40,7 @@ export const sampleEpisodeComments: EpisodeComment[] = [
     content:
       "This is exactly why I want comments tied to the transcript. The sentence about honesty not being punished feels like the heart of the app.",
     reactionCount: 4,
+    reactionUserEmails: ["maya@example.com", "chris@example.com"],
     createdAt: "2026-07-20T18:20:00.000Z",
     replies: [
       {
@@ -53,6 +61,7 @@ export const sampleEpisodeComments: EpisodeComment[] = [
     content:
       "The app should make this moment easy to find again because it explains the whole product direction.",
     reactionCount: 2,
+    reactionUserEmails: ["jordan@example.com"],
     createdAt: "2026-07-21T09:15:00.000Z",
     replies: [],
   },
@@ -64,6 +73,7 @@ export const sampleEpisodeComments: EpisodeComment[] = [
     content:
       "This would be a great place for listeners to share what questions they are carrying without starting a whole separate thread.",
     reactionCount: 3,
+    reactionUserEmails: ["maya@example.com"],
     createdAt: "2026-07-21T11:32:00.000Z",
     replies: [],
   },

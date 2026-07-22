@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from "react";
 
-type AuthUser = {
+export type AuthUser = {
   name: string;
   email: string;
 };

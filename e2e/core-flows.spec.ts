@@ -79,4 +79,39 @@ test.describe("Rediscovering Faith core flows", () => {
     ).toBeVisible();
     await expect(firstSegment.getByText("1 comment")).toBeVisible();
   });
+
+  test("signed-in listener can reply and react to a comment", async ({ page }) => {
+    await page.goto("/auth/sign-up");
+
+    await page.getByLabel("Name").fill("Taylor Morgan");
+    await page.getByLabel("Email").fill("taylor-comments@example.com");
+    await page.getByLabel("Password").fill("faith-community");
+    await page.getByRole("button", { name: "Create Account" }).click();
+
+    await page.goto("/episodes/finding-belonging-after-spiritual-burnout");
+
+    const existingComment = page
+      .locator("article")
+      .filter({
+        hasText: "honesty not being punished feels like the heart of the app",
+      })
+      .first();
+
+    await existingComment.getByRole("button", { name: "React" }).click();
+
+    await expect(
+      existingComment.getByRole("button", { name: "Reacted" }),
+    ).toBeVisible();
+    await expect(existingComment.getByText("5 reactions")).toBeVisible();
+
+    await existingComment
+      .getByLabel("Reply to Jordan Lee")
+      .fill("This reply keeps the episode conversation moving.");
+    await existingComment.getByRole("button", { name: "Add Reply" }).click();
+
+    await expect(
+      existingComment.getByText("This reply keeps the episode conversation moving."),
+    ).toBeVisible();
+    await expect(existingComment.getByText("2 replies")).toBeVisible();
+  });
 });

@@ -41,3 +41,27 @@ Sign up -> open an episode -> find a transcript timestamp -> add a comment -> se
 ## Current Limitation
 
 This is local browser persistence, not shared Supabase persistence yet. That is intentional for this stage of Sprint 2 because it proves the interaction and data shape before wiring the database.
+
+## July 22 Update
+
+RF-021 and RF-022 are now implemented.
+
+Replies:
+
+- Seeded replies still display under their parent comments.
+- Signed-in listeners can add a reply to an existing timestamped comment.
+- New replies render immediately under the correct parent comment.
+- Comments with no replies show a clear empty reply state.
+
+Reactions:
+
+- Signed-in listeners can react to a comment.
+- The reaction count updates immediately.
+- The reaction button changes state after the current listener reacts.
+- The local state tracks the signed-in listener email so one listener can toggle their own reaction instead of stacking unlimited likes.
+
+Updated demo flow:
+
+```text
+Sign up -> open an episode -> add a timestamped comment -> reply to an existing comment -> react to a comment
+```

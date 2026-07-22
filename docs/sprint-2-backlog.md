@@ -84,6 +84,8 @@ Acceptance criteria:
 - Replies appear under the correct parent comment.
 - Empty reply states are clear.
 
+Status: Completed July 22, 2026 with nested reply forms and local reply state on timestamped comments.
+
 ### RF-022: Add likes and reactions
 
 Priority: Normal  
@@ -96,6 +98,8 @@ Acceptance criteria:
 - Reaction count updates in the UI.
 - Interaction state is clear to the user.
 - Reaction behavior is covered by tests.
+
+Status: Completed July 22, 2026 with signed-in reaction toggles and test coverage.
 
 ### RF-023: Add saved episodes and bookmarks
 
