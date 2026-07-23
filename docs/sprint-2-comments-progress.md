@@ -65,3 +65,26 @@ Updated demo flow:
 ```text
 Sign up -> open an episode -> add a timestamped comment -> reply to an existing comment -> react to a comment
 ```
+
+## July 23 Update
+
+RF-023 and RF-024 are now implemented.
+
+Saved items:
+
+- Signed-in listeners can save an episode from the episode detail page.
+- Signed-in listeners can bookmark individual transcript segments.
+- Saved episode and bookmark counts show on the account dashboard.
+- Saved state is stored locally by listener email so it can later map to Supabase records.
+
+Discussion board:
+
+- `/discussions` now exists as a community board page.
+- Episode detail pages link into the discussion board.
+- Seeded discussion prompts show title, author, reply count, reaction count, related episode, and timestamp when available.
+
+Updated demo flow:
+
+```text
+Sign up -> open an episode -> save the episode -> bookmark a transcript moment -> open Discussions
+```

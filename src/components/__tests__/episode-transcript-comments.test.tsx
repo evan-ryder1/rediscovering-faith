@@ -138,4 +138,38 @@ describe("EpisodeTranscriptComments", () => {
     ).toBeInTheDocument();
     expect(within(existingComment!).getByText("2 replies")).toBeInTheDocument();
   });
+
+  it("lets a signed-in listener bookmark a transcript segment", async () => {
+    const user = userEvent.setup();
+
+    renderWithProviders(
+      <>
+        <AuthForm mode="sign-up" />
+        <EpisodeTranscriptComments episodeId={episodeId} segments={segments} />
+      </>,
+    );
+
+    await waitFor(() => expect(screen.getByLabelText("Name")).toBeEnabled());
+
+    await user.clear(screen.getByLabelText("Name"));
+    await user.type(screen.getByLabelText("Name"), "Riley Carter");
+    await user.clear(screen.getByLabelText("Email"));
+    await user.type(screen.getByLabelText("Email"), "riley@example.com");
+    await user.type(screen.getByLabelText("Password"), "faith-community");
+    await user.click(screen.getByRole("button", { name: "Create Account" }));
+
+    const firstSegment = screen
+      .getByText("Welcome back to Rediscovering Faith Conversations.", {
+        exact: false,
+      })
+      .closest("li");
+
+    expect(firstSegment).toBeInTheDocument();
+
+    await user.click(within(firstSegment!).getByRole("button", { name: "Bookmark" }));
+
+    expect(
+      within(firstSegment!).getByRole("button", { name: "Bookmarked" }),
+    ).toHaveAttribute("aria-pressed", "true");
+  });
 });

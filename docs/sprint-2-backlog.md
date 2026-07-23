@@ -114,6 +114,8 @@ Acceptance criteria:
 - Saved state is visible in the episode UI.
 - Account page reflects saved items or placeholder saved item counts.
 
+Status: Completed July 23, 2026 with local saved episodes, transcript bookmarks, and account dashboard counts.
+
 ### RF-024: Create discussion board page
 
 Priority: High  
@@ -126,6 +128,8 @@ Acceptance criteria:
 - Episode detail page links to the discussion board.
 - Discussion board shows seeded thread prompts.
 - Thread cards show title, author, reply count, and related episode.
+
+Status: Completed July 23, 2026 with `/discussions`, seeded prompts, episode links, and discussion navigation.
 
 ### RF-025: Add discussion thread detail view
 

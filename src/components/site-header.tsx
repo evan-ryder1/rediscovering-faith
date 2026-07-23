@@ -6,6 +6,7 @@ import { AuthNav } from "@/components/auth-nav";
 const navItems = [
   { href: "/podcasts", label: "Podcasts" },
   { href: "/episodes", label: "Episodes" },
+  { href: "/discussions", label: "Discussions" },
 ];
 
 export function SiteHeader() {

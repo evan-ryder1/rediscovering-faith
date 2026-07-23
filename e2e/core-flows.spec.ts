@@ -114,4 +114,55 @@ test.describe("Rediscovering Faith core flows", () => {
     ).toBeVisible();
     await expect(existingComment.getByText("2 replies")).toBeVisible();
   });
+
+  test("signed-in listener can save an episode and bookmark a transcript segment", async ({
+    page,
+  }) => {
+    await page.goto("/auth/sign-up");
+
+    await page.getByLabel("Name").fill("Riley Carter");
+    await page.getByLabel("Email").fill("riley-saves@example.com");
+    await page.getByLabel("Password").fill("faith-community");
+    await page.getByRole("button", { name: "Create Account" }).click();
+
+    await page.goto("/episodes/finding-belonging-after-spiritual-burnout");
+
+    await page.getByRole("button", { name: "Save Episode" }).click();
+    await expect(
+      page.getByRole("button", { name: "Saved Episode" }),
+    ).toBeVisible();
+
+    const firstSegment = page
+      .locator("li")
+      .filter({
+        hasText: "Welcome back to Rediscovering Faith Conversations.",
+      })
+      .first();
+
+    await firstSegment.getByRole("button", { name: "Bookmark" }).click();
+    await expect(firstSegment.getByRole("button", { name: "Bookmarked" })).toBeVisible();
+
+    await page.goto("/account");
+
+    await expect(
+      page.getByLabel("Saved episodes count").getByText("1"),
+    ).toBeVisible();
+    await expect(
+      page.getByLabel("Transcript bookmarks count").getByText("1"),
+    ).toBeVisible();
+  });
+
+  test("visitor can open the discussion board from an episode", async ({ page }) => {
+    await page.goto("/episodes/finding-belonging-after-spiritual-burnout");
+
+    await page.getByRole("link", { name: "View Discussions" }).click();
+
+    await expect(page).toHaveURL(/\/discussions$/);
+    await expect(
+      page.getByRole("heading", { name: "Discussions" }),
+    ).toBeVisible();
+    await expect(
+      page.getByText("What makes honesty feel safe in a faith community?"),
+    ).toBeVisible();
+  });
 });

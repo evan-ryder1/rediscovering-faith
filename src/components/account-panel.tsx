@@ -3,9 +3,12 @@
 import Link from "next/link";
 
 import { useAuth } from "@/components/auth-provider";
+import { useCommunity } from "@/components/community-provider";
 
 export function AccountPanel() {
   const { user, signOut } = useAuth();
+  const { comments, getSavedEpisodesForUser, getTranscriptBookmarksForUser } =
+    useCommunity();
 
   if (!user) {
     return (
@@ -28,6 +31,12 @@ export function AccountPanel() {
     );
   }
 
+  const savedEpisodeCount = getSavedEpisodesForUser(user.email).length;
+  const bookmarkCount = getTranscriptBookmarksForUser(user.email).length;
+  const commentCount = comments.filter(
+    (comment) => comment.authorName === user.name,
+  ).length;
+
   return (
     <section className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
       <div className="brand-card p-6">
@@ -49,24 +58,44 @@ export function AccountPanel() {
         <p className="brand-kicker">Listener Dashboard</p>
         <h2 className="mt-2 text-3xl font-black uppercase">Ready for Sprint 2</h2>
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
-          <div className="border-l-4 border-[#ff8a45] bg-[#fff4ea] p-4">
+          <div
+            aria-label="Saved episodes count"
+            className="border-l-4 border-[#ff8a45] bg-[#fff4ea] p-4"
+          >
             <p className="text-sm font-bold text-[#6e5b50]">Saved Episodes</p>
-            <p className="mt-1 text-3xl font-black">0</p>
+            <p className="mt-1 text-3xl font-black">{savedEpisodeCount}</p>
           </div>
-          <div className="border-l-4 border-[#e85f1f] bg-[#fff4ea] p-4">
-            <p className="text-sm font-bold text-[#6e5b50]">Transcript Notes</p>
-            <p className="mt-1 text-3xl font-black">0</p>
+          <div
+            aria-label="Transcript bookmarks count"
+            className="border-l-4 border-[#e85f1f] bg-[#fff4ea] p-4"
+          >
+            <p className="text-sm font-bold text-[#6e5b50]">Bookmarks</p>
+            <p className="mt-1 text-3xl font-black">{bookmarkCount}</p>
           </div>
-          <div className="border-l-4 border-[#241914] bg-[#fff4ea] p-4">
-            <p className="text-sm font-bold text-[#6e5b50]">Discussions</p>
-            <p className="mt-1 text-3xl font-black">0</p>
+          <div
+            aria-label="Comments count"
+            className="border-l-4 border-[#241914] bg-[#fff4ea] p-4"
+          >
+            <p className="text-sm font-bold text-[#6e5b50]">Comments</p>
+            <p className="mt-1 text-3xl font-black">{commentCount}</p>
           </div>
         </div>
         <p className="mt-5 leading-7 text-[#6e5b50]">
-          This page proves the basic authenticated flow now. Supabase Auth can
-          replace the local browser session without changing the main user
-          experience.
+          Your saved episodes, transcript bookmarks, and comment activity will
+          move from local browser state into Supabase as the community layer
+          matures.
         </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link className="brand-button px-5 py-3 text-sm" href="/episodes">
+            Browse Episodes
+          </Link>
+          <Link
+            className="brand-button-secondary px-5 py-3 text-sm"
+            href="/discussions"
+          >
+            View Discussions
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -163,7 +163,9 @@ export function EpisodeTranscriptComments({
     addReply,
     getCommentCountForSegment,
     getCommentsForSegment,
+    isTranscriptSegmentBookmarked,
     toggleReaction,
+    toggleTranscriptBookmark,
   } = useCommunity();
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [replyDrafts, setReplyDrafts] = useState<Record<string, string>>({});
@@ -250,6 +252,14 @@ export function EpisodeTranscriptComments({
     toggleReaction(comment.id, user.email);
   }
 
+  function handleBookmarkToggle(segment: TranscriptSegment) {
+    if (!user) {
+      return;
+    }
+
+    toggleTranscriptBookmark(episodeId, segment.id, user.email);
+  }
+
   if (segments.length === 0) {
     return (
       <div className="mt-5 border border-dashed border-[#f1d8c7] bg-[#fff4ea] p-6">
@@ -283,6 +293,9 @@ export function EpisodeTranscriptComments({
         {segments.map((segment) => {
           const segmentComments = getCommentsForSegment(segment.id);
           const draft = drafts[segment.id] ?? "";
+          const isBookmarked = user
+            ? isTranscriptSegmentBookmarked(segment.id, user.email)
+            : false;
 
           return (
             <li
@@ -299,6 +312,20 @@ export function EpisodeTranscriptComments({
                 <p className="mt-3 text-xs font-black uppercase tracking-[0.1em] text-[#4f453e]">
                   {getCommentLabel(segmentComments.length)}
                 </p>
+                {user ? (
+                  <button
+                    aria-pressed={isBookmarked}
+                    className={
+                      isBookmarked
+                        ? "mt-3 rounded-md bg-[#e85f1f] px-3 py-2 text-xs font-black uppercase tracking-[0.1em] text-white transition hover:bg-[#c94a12]"
+                        : "mt-3 rounded-md border border-[#f1d8c7] bg-white px-3 py-2 text-xs font-black uppercase tracking-[0.1em] text-[#4f453e] transition hover:border-[#e85f1f] hover:text-[#e85f1f]"
+                    }
+                    onClick={() => handleBookmarkToggle(segment)}
+                    type="button"
+                  >
+                    {isBookmarked ? "Bookmarked" : "Bookmark"}
+                  </button>
+                ) : null}
               </div>
               <div>
                 <p className="text-sm font-black uppercase tracking-[0.1em] text-[#4f453e]">

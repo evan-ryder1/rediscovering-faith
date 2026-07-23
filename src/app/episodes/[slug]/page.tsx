@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { EpisodeTranscriptComments } from "@/components/episode-transcript-comments";
+import { EpisodeSaveActions } from "@/components/episode-save-actions";
 import {
   formatEpisodeDuration,
   formatPublishedDate,
@@ -72,6 +73,7 @@ export default async function EpisodeDetailPage({
           <p className="mt-5 max-w-2xl text-lg leading-8 text-[#6e5b50]">
             {episode.description}
           </p>
+          <EpisodeSaveActions episodeId={episode.id} />
 
           <dl className="mt-8 grid gap-3 sm:grid-cols-3">
             <div className="brand-card border-l-4 border-l-[#ff8a45] p-4">

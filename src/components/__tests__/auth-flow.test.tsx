@@ -5,6 +5,7 @@ import { AccountPanel } from "@/components/account-panel";
 import { AuthForm } from "@/components/auth-form";
 import { AuthNav } from "@/components/auth-nav";
 import { AuthProvider } from "@/components/auth-provider";
+import { CommunityProvider } from "@/components/community-provider";
 
 const pushMock = jest.fn();
 
@@ -15,7 +16,11 @@ jest.mock("next/navigation", () => ({
 }));
 
 function renderWithAuth(children: React.ReactNode) {
-  return render(<AuthProvider>{children}</AuthProvider>);
+  return render(
+    <AuthProvider>
+      <CommunityProvider>{children}</CommunityProvider>
+    </AuthProvider>,
+  );
 }
 
 describe("local auth flow", () => {
@@ -69,6 +74,9 @@ describe("local auth flow", () => {
 
     expect(screen.getByText("Signed In")).toBeInTheDocument();
     expect(screen.getByText("evan@example.com")).toBeInTheDocument();
+    expect(screen.getByText("Saved Episodes")).toBeInTheDocument();
+    expect(screen.getByText("Bookmarks")).toBeInTheDocument();
+    expect(screen.getByText("Comments")).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Sign Out" }));
 

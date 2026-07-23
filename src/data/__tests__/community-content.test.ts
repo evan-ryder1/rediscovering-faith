@@ -1,5 +1,7 @@
 import {
+  getDiscussionThreadsForEpisode,
   getCommentsForSegment,
+  sampleDiscussionThreads,
   sampleEpisodeComments,
 } from "@/data/community-content";
 
@@ -29,5 +31,15 @@ describe("community content helpers", () => {
 
     expect(comment.reactionCount).toBeGreaterThan(0);
     expect(comment.reactionUserEmails.length).toBeGreaterThan(0);
+  });
+
+  it("connects discussion threads to episode-level community prompts", () => {
+    const threads = getDiscussionThreadsForEpisode(
+      "episode-belonging-after-burnout",
+    );
+
+    expect(sampleDiscussionThreads.length).toBeGreaterThan(0);
+    expect(threads.length).toBeGreaterThan(1);
+    expect(threads[0].episodeId).toBe("episode-belonging-after-burnout");
   });
 });
